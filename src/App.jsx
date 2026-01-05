@@ -157,8 +157,9 @@ export default function App() {
       if (transRes.ok) setTransactions(await transRes.json());
       
       // 如果是管理员，获取邀请码
+      // 修复：修改API路径为 /api/codes
       if (isAdmin) {
-        const codesRes = await fetch('/api/admin/codes');
+        const codesRes = await fetch('/api/codes', { cache: 'no-store' });
         if (codesRes.ok) setInviteCodes(await codesRes.json());
       }
     } catch (e) {
@@ -271,7 +272,8 @@ export default function App() {
 
   const generateInviteCode = async () => {
      try {
-       const res = await fetch('/api/admin/codes', { method: 'POST' });
+       // 修复：修改API路径为 /api/codes
+       const res = await fetch('/api/codes', { method: 'POST' });
        if (res.ok) {
          fetchCloudData();
          showToast("验证码已生成！");
